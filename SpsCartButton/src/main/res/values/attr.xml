@@ -48,6 +48,7 @@
         <attr name="android:progress"/>
 
         <attr name="TextAddToCart" format="string"/>
+        <attr name="TextEditCart" format="string"/>
         <attr name="TextMaximum" format="string"/>
         <attr name="TextMinimum" format="string"/>
         <attr name="TextNoInventory" format="string"/>

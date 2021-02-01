@@ -18,11 +18,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SpCartBtn = findViewById(R.id.spCartBtn);
-        SpCartBtn.setConfig(21, 5, 4, 300, 1, 3, 100);
+        SpCartBtn.setConfig(21, 2, 0, 300, 1, 3, 100);
         SpCartBtn.setOnValueChangeListener(new SpCartButton.OnValueChangeListener() {
             @Override
             public void onEvent() {
-                Toast.makeText(MainActivity.this, "SS : "+ SpCartBtn.getValue(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "SS : "+ SpCartBtn.getValue(), Toast.LENGTH_SHORT).show();
             }
         });
         SpCartBtn.setOnVeClickListener(new SpCartButton.OnVeClickListener() {

@@ -12,11 +12,11 @@
         android:layout_width="wrap_content"
         app:ModeStatus="STATUS_NORMAL_NOT_SEL"
         app:ModeIconPosition="Right"
-        app:TextAddToCart="string/action_sign_in"
-        app:TextMaximum="string/PleaseWait"
-        app:TextMinimum="string/Successful"
-        app:TextNoInventory="string/UnSuccessful"
+        app:TextAddToCart="Add To Cart"
+        app:TextMaximum="MAX"
+        app:TextMinimum="min"
+        app:TextNoInventory="inventory"
         app:TextDescription="تست1 تست2 23"
-        app:SizeHeight="@dimen/sps_lpr_sz_50">
+        app:SizeHeight="@dimen/sps_lpr_sz_60">
     </com.spisoft.spscartbutton.SpCartButton>
 </RelativeLayout>

@@ -30,7 +30,7 @@ import com.spisoft.spcircleview.CircleView;
 public class SpCartButton extends RelativeLayout {
     private View rootView;
     private Drawable mIconNormal , mIconProgress , mIconSuccess , mIconFail , mIconInfo ;
-    private String mTextNormal = "Add to cart", mTextDescription = "", mTextInventory = "No inventory", mTextMax = "Maximum", mTextMin = "Minimum";
+    private String mTextNormal = "Add to cart", mTextEditCart = "Edit Cart", mTextDescription = "", mTextInventory = "No inventory", mTextMax = "Maximum", mTextMin = "Minimum";
     private String mDescNormal = "", mDescProgress = "", mDescSuccess = "", mDescFail = "", mDescInfo = "";
     private int mColorTextDefault = R.color.colorText, mColorNormal = R.color.colorNormal, mColorProgress = R.color.colorProgress,
             mColorSuccess = R.color.colorSuccess, mColorFail = R.color.colorFail, mColorInfo = R.color.colorFail;
@@ -145,7 +145,18 @@ public class SpCartButton extends RelativeLayout {
                     JumpUp(mJump);
                 }
                 else {
-                    mVeClickListener.onEvent();
+                    mProgressStart.setIndeterminate(true);
+                    mProgressStart.setIndeterminate(true);
+                    YoYo.with(Techniques.Pulse)
+                            .duration(300)
+                            .repeat(0)
+                            .onEnd(new YoYo.AnimatorCallback() {
+                                @Override
+                                public void call(Animator animator) {
+                                    mProgressStart.setIndeterminate(false);
+                                    mVeClickListener.onEvent();
+                                }
+                            }).playOn(circleView_St);
                 }
             }
         });
@@ -174,7 +185,18 @@ public class SpCartButton extends RelativeLayout {
                     JumpDn(mJump);
                 }
                 else {
-                    mVsClickListener.onEvent();
+                    mProgressEnd.setIndeterminate(true);
+                    mProgressEnd.setIndeterminate(true);
+                    YoYo.with(Techniques.Pulse)
+                            .duration(300)
+                            .repeat(0)
+                            .onEnd(new YoYo.AnimatorCallback() {
+                                @Override
+                                public void call(Animator animator) {
+                                    mProgressEnd.setIndeterminate(false);
+                                    mVsClickListener.onEvent();
+                                }
+                            }).playOn(circleView_Ed);
                 }
             }
         });
@@ -293,7 +315,7 @@ public class SpCartButton extends RelativeLayout {
             mText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
 
             int mTextCntSize = typedArray.getDimensionPixelSize(R.styleable.SpCartButton_TextCntSize, 0);
-            if(mTextCntSize == 0) mTextCntSize = (int) atSize/3;
+            if(mTextCntSize == 0) mTextCntSize = atSize*2/5;
             mTextCnt.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextCntSize);
             mTextCounter.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextCntSize);
 
@@ -341,6 +363,8 @@ public class SpCartButton extends RelativeLayout {
 
             String atTextNormal = typedArray.getString(R.styleable.SpCartButton_TextAddToCart);
             if(atTextNormal != null) mTextNormal = atTextNormal;
+            String atTextEditCart = typedArray.getString(R.styleable.SpCartButton_TextEditCart);
+            if(atTextEditCart != null) mTextEditCart = atTextEditCart;
             String atTextMaximum = typedArray.getString(R.styleable.SpCartButton_TextMaximum);
             if(atTextMaximum != null) mTextMax = atTextMaximum;
             String atTextMinimum = typedArray.getString(R.styleable.SpCartButton_TextMinimum);
@@ -428,26 +452,28 @@ public class SpCartButton extends RelativeLayout {
         }
         if(!onStart)
             mValueChangeListener.onEvent();
+        else
+            RefreshModeStatus(0, 0);
     }
 
     private void RefreshModeStatus(int mModeStatus, int mStatus) {
         CurrentMode = mModeStatus;
-        SetStatus_Icon(mModeStatus, mStatus);
-        SetStatus_Counter(mModeStatus);
         SetStatus_Text(mModeStatus);
+        SetStatus_Counter(mModeStatus);
+        SetStatus_Icon(mModeStatus, mStatus);
 
-        switch (mModeStatus){
-            case -2:
-                break;
-            case -1:
-                break;
-            case 0:
-                break;
-            case 1:
-                break;
+//        switch (mModeStatus){
+//            case -2:
+//                break;
+//            case -1:
+//                break;
+//            case 0:
+//                break;
+//            case 1:
+//                break;
 //            case 2:
 //                break;
-        }
+//        }
     }
 
     private void SetStatus_Text(int mModeStatus) {
@@ -462,7 +488,11 @@ public class SpCartButton extends RelativeLayout {
                 mTextDesc.setText(mTextInventory);
                 break;
             case 0:
-                mText.setText(mTextNormal);
+                if(mValue == 0)
+                    mText.setText(mTextNormal);
+                else
+                    mText.setText(mTextEditCart);
+
                 mTextDesc.setText(mTextDescription);
                 break;
             case 1:
@@ -480,8 +510,10 @@ public class SpCartButton extends RelativeLayout {
             case 1:
                 mTextCnt.setVisibility(VISIBLE);
                 if(mValue <= mMin) {
+                    mTextDesc.setText(mTextMin);
                     mIconE.setImageResource(R.drawable.ic_baseline_remove_shopping_cart_24);
                     if(mValue == 0){
+                        mTextDesc.setText("");
                         mIconE.setImageResource(R.drawable.ic_baseline_remove_shopping_cart_24_disable);
                     }
                 }
@@ -604,9 +636,11 @@ public class SpCartButton extends RelativeLayout {
 
         switch (mModeStatus){
             case -2:
+                mTextDesc.setText(mTextMax);
                 mIcon.setImageResource(R.drawable.ic_baseline_block_24);
                 break;
             case -1:
+                mTextDesc.setText(mTextInventory);
                 mIcon.setImageResource(R.drawable.ic_baseline_cancel_24);
                 break;
             case 0:
@@ -681,8 +715,9 @@ public class SpCartButton extends RelativeLayout {
         return this;
     }
 
-    public SpCartButton setText(String textAddToCart, String textMin, String textMax, String textNoInventory){
+    public SpCartButton setText(String textAddToCart, String textEditCart, String textMin, String textMax, String textNoInventory){
         mTextNormal = textAddToCart;
+        mTextEditCart = textEditCart;
         mTextMin = textMin;
         mTextMax = textMax;
         mTextInventory = textNoInventory;
