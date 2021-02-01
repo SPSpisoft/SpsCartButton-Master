@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SpCartButton">
+
+        <attr name="SizeHeight" format="dimension"/>
+        <attr name="CurrentMode" format="integer"/>
+
+        <attr name="ModeStatus" format="enum">
+            <enum name="STATUS_SEL_MAX" value="-2"/>
+            <enum name="STATUS_NO_INVENTORY" value="-1"/>
+            <enum name="STATUS_NORMAL_NOT_SEL" value="0"/>
+            <enum name="STATUS_SELECT_MODE" value="1"/>
+<!--            <enum name="STATUS_SELECTED" value="2"/>-->
+        </attr>
+
+        <attr name="ModeStyle" format="enum">
+            <enum name="Normal" value="0"/>
+            <enum name="HideText" value="1"/>
+        </attr>
+
+        <attr name="ModeIconPosition" format="enum">
+            <enum name="Left" value="0"/>
+            <enum name="Right" value="1"/>
+            <enum name="Top" value="2"/>
+            <enum name="Bottom" value="3"/>
+        </attr>
+
+        <attr name="AnimDuration" format="integer"/>
+        <attr name="AnimMode" format="enum">
+            <enum name="Rotate" value="0"/>
+            <enum name="LeftToRight" value="1"/>
+            <enum name="RightToLeft" value="2"/>
+            <enum name="UpToDown" value="3"/>
+            <enum name="DownToUp" value="4"/>
+        </attr>
+
+        <attr name="SrcBackground" format="reference"/>
+        <attr name="ColorBackSet" format="boolean"/>
+        <attr name="ColorDescSet" format="boolean"/>
+        <attr name="ColorText" format="color"/>
+        <attr name="ColorNormal" format="color"/>
+        <attr name="ColorProgress" format="color"/>
+        <attr name="ColorSuccess" format="color"/>
+        <attr name="ColorFail" format="color"/>
+
+        <attr name="android:indeterminate"/>
+        <attr name="android:progress"/>
+
+        <attr name="TextAddToCart" format="string"/>
+        <attr name="TextMaximum" format="string"/>
+        <attr name="TextMinimum" format="string"/>
+        <attr name="TextNoInventory" format="string"/>
+        <attr name="TextDescription" format="string"/>
+        <attr name="android:typeface"/>
+        <attr name="android:textSize"/>
+        <attr name="android:textColor"/>
+        <attr name="TextPadding" format="integer"/>
+
+<!--        <attr name="IconNormal" format="reference"/>-->
+<!--        <attr name="IconProgress" format="reference"/>-->
+<!--        <attr name="IconSuccess" format="reference"/>-->
+<!--        <attr name="IconFail" format="reference"/>-->
+<!--        <attr name="IconInfo" format="reference"/>-->
+<!--        <attr name="IconPadding" format="dimension"/>-->
+
+<!--        <attr name="Indeterminate" format="boolean"/>-->
+
+    </declare-styleable>
+</resources>

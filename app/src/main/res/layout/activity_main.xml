@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.spisoft.spscartbutton.SpCartButton
+        android:id="@+id/spCartBtn"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        app:ModeStatus="STATUS_NORMAL_NOT_SEL"
+        app:ModeIconPosition="Right"
+        app:TextAddToCart="string/action_sign_in"
+        app:TextMaximum="string/PleaseWait"
+        app:TextMinimum="string/Successful"
+        app:TextNoInventory="string/UnSuccessful"
+        app:TextDescription="تست1 تست2 23"
+        app:SizeHeight="@dimen/sps_lpr_sz_100">
+    </com.spisoft.spscartbutton.SpCartButton>
+</RelativeLayout>

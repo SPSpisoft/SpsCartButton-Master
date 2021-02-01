@@ -1,0 +1,3 @@
+include ':SpsCartButton'
+include ':app'
+rootProject.name = "SpsCartButton-Master"
