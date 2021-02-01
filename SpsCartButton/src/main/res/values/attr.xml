@@ -35,14 +35,14 @@
             <enum name="DownToUp" value="4"/>
         </attr>
 
-        <attr name="SrcBackground" format="reference"/>
-        <attr name="ColorBackSet" format="boolean"/>
-        <attr name="ColorDescSet" format="boolean"/>
-        <attr name="ColorText" format="color"/>
-        <attr name="ColorNormal" format="color"/>
-        <attr name="ColorProgress" format="color"/>
-        <attr name="ColorSuccess" format="color"/>
-        <attr name="ColorFail" format="color"/>
+<!--        <attr name="SrcBackground" format="reference"/>-->
+<!--        <attr name="ColorBackSet" format="boolean"/>-->
+<!--        <attr name="ColorDescSet" format="boolean"/>-->
+<!--        <attr name="ColorText" format="color"/>-->
+<!--        <attr name="ColorNormal" format="color"/>-->
+<!--        <attr name="ColorMax" format="color"/>-->
+<!--        <attr name="ColorMin" format="color"/>-->
+<!--        <attr name="ColorFailInventory" format="color"/>-->
 
         <attr name="android:indeterminate"/>
         <attr name="android:progress"/>
@@ -56,6 +56,9 @@
         <attr name="android:textSize"/>
         <attr name="android:textColor"/>
         <attr name="TextPadding" format="integer"/>
+
+        <attr name="TextCntSize" format="dimension"/>
+        <attr name="TextDescSize" format="dimension"/>
 
 <!--        <attr name="IconNormal" format="reference"/>-->
 <!--        <attr name="IconProgress" format="reference"/>-->

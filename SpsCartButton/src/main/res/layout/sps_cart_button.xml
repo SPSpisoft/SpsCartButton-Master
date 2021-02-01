@@ -76,15 +76,18 @@
 
     </LinearLayout>
 
-
-    <TextView
+    <EditText
         android:id="@+id/vTextCnt"
+        android:inputType="numberDecimal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textColor="@android:color/white"
+        android:background="@android:color/transparent"
+        android:enabled="false"
         android:textStyle="bold"
         android:clickable="false"
+        android:autoSizeTextType="uniform"
         android:text="0"
         android:textSize="40sp" />
 
@@ -100,6 +103,7 @@
     </com.spisoft.spcircleview.CircleView>
 
     <RelativeLayout
+        android:id="@+id/rlyIconSha"
         android:layout_alignParentStart="true"
         android:layout_alignEnd="@+id/cv_s"
         android:gravity="center_vertical"
@@ -110,10 +114,43 @@
         <ImageView
             android:id="@+id/vIcon"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:src="@drawable/ic_baseline_shopping_cart_24"
             android:padding="@dimen/sps_lpr_sz_25"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+        <View
+            android:layout_centerInParent="true"
+            android:id="@+id/vCenter"
+            android:layout_width="1dp"
+            android:layout_height="1dp"/>
+
+        <TextView
+            android:id="@+id/txtCntCur"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/vCenter"
+            android:gravity="bottom"
+            android:textStyle="bold"
+            android:visibility="visible"
+            android:text="0"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.spisoft.spcircleview.CircleView
+            android:id="@+id/txtCntAll"
+            android:visibility="gone"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/sps_lpr_sz_25"
+            android:layout_marginRight="@dimen/sps_lpr_sz_25"
+            app:cv_titleText="0"
+            app:cv_titleColor="@android:color/white"
+            app:cv_strokeColorValue="@android:color/holo_red_light"
+            app:cv_backgroundColorValue="@android:color/holo_red_light"
+            app:cv_fillColor="@android:color/holo_red_light"
+            android:layout_width="@dimen/sps_lpr_sz_20"
+            android:layout_height="@dimen/sps_lpr_sz_20"/>
+
     </RelativeLayout>
 
     <com.spisoft.spcircleview.CircleView
@@ -145,7 +182,7 @@
 
         <RelativeLayout
             android:id="@+id/rlyIconE"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -153,12 +190,40 @@
                 android:id="@+id/vTextCounter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_above="@+id/rlyCntAll"
+                android:layout_centerHorizontal="true"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:clickable="false"
-                android:text="0"
-                android:textSize="40sp" />
+                android:text="0"/>
+
+            <RelativeLayout
+                android:id="@+id/rlyCntAll"
+                android:paddingBottom="@dimen/sps_lpr_5"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/lnSpin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/sps_lpr_sz_20"
+                    android:layout_marginEnd="@dimen/sps_lpr_sz_20"
+                    android:background="@android:color/darker_gray"/>
+
+                <TextView
+                    android:id="@+id/vTextCounterAll"
+                    android:layout_below="@+id/lnSpin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:clickable="false"
+                    android:text="0"/>
+            </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
 

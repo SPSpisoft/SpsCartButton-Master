@@ -7,6 +7,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -33,7 +34,7 @@ public class SpCartButton extends RelativeLayout {
     private String mDescNormal = "", mDescProgress = "", mDescSuccess = "", mDescFail = "", mDescInfo = "";
     private int mColorTextDefault = R.color.colorText, mColorNormal = R.color.colorNormal, mColorProgress = R.color.colorProgress,
             mColorSuccess = R.color.colorSuccess, mColorFail = R.color.colorFail, mColorInfo = R.color.colorFail;
-    private View mViewBase;
+    private View mViewBase, RlyCntAll;
     private boolean mColorSet = false, mColorDescSet = false;
     private int mModeStyle = 0;
     private Animation animSel, animation_blink, animation_rotate, animation_rotate_cb , animation_left_to_right , animation_right_to_left, animation_up_to_down, animation_down_to_up;
@@ -44,19 +45,22 @@ public class SpCartButton extends RelativeLayout {
     private Context mContext;
     private OnInfoClickListener mInfoClickListener;
     private boolean mInfoKeyShowOnStable;
+    private OnValueChangeListener mValueChangeListener;
 
     private int mModeStatus;
     private ImageView mIcon, mIconE;
-    private TextView mText, mTextDesc;
+    private TextView mText, mTextDesc, mTxtCntCur, mTextCounterAll;
     private RelativeLayout mButtonRly, mCounterRly;
-    private CircleView circleView_St, circleView_Ed;
+    private CircleView circleView_St, circleView_Ed, mTxtCntAll;
     private ContentLoadingProgressBar mProgress;
     private CircularProgressView mProgressStart, mProgressEnd;
     private MaterialCardView MainView;
     private YoYo.YoYoString mAnimate = null;
-    private float mValueOther = 0,  mValue = 0, mInventory = 12, mJump = 1, mMin = 2, mMax = 10;
+    private float mValueCart = -1, mValueOther = -1,  mValue = 0, mInventory = 12, mJump = 1, mMin = 2, mMax = 10;
     private boolean mAvailable;
     private TextView mTextCnt, mTextCounter;
+    private OnVsClickListener mVsClickListener;
+    private OnVeClickListener mVeClickListener;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public SpCartButton(Context context) {
@@ -98,6 +102,10 @@ public class SpCartButton extends RelativeLayout {
         mIconE = rootView.findViewById(R.id.vIconE);
         mText = rootView.findViewById(R.id.vText);
         mTextDesc = rootView.findViewById(R.id.vTextDesc);
+        mTxtCntCur = rootView.findViewById(R.id.txtCntCur);
+        mTxtCntAll = rootView.findViewById(R.id.txtCntAll);
+        RlyCntAll = rootView.findViewById(R.id.rlyCntAll);
+        mTextCounterAll = rootView.findViewById(R.id.vTextCounterAll);
 
         mCounterRly = rootView.findViewById(R.id.rlyIconE);
         mButtonRly = rootView.findViewById(R.id.cButtonRly);
@@ -131,13 +139,29 @@ public class SpCartButton extends RelativeLayout {
         mIcon.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(getContext(), "cvs : "+CurrentMode, Toast.LENGTH_SHORT).show();
                 if(CurrentMode == 1){
-//                    Toast.makeText(getContext(), "cvs 1", Toast.LENGTH_SHORT).show();
                     removeCallbacks(resetToNormalMode);
                     postDelayed(resetToNormalMode, 3000);
-                    JumpUp();
+                    JumpUp(mJump);
                 }
+                else {
+                    mVeClickListener.onEvent();
+                }
+            }
+        });
+
+        mIcon.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(CurrentMode == 1){
+                    removeCallbacks(resetToNormalMode);
+                    postDelayed(resetToNormalMode, 3000);
+                    JumpUp(mJump * 10);
+                }
+                else {
+                    mVeClickListener.onEvent();
+                }
+                return true;
             }
         });
 
@@ -147,8 +171,26 @@ public class SpCartButton extends RelativeLayout {
                 if(CurrentMode == 1 && mValue > 0){
                     removeCallbacks(resetToNormalMode);
                     postDelayed(resetToNormalMode, 3000);
-                    JumpDn();
+                    JumpDn(mJump);
                 }
+                else {
+                    mVsClickListener.onEvent();
+                }
+            }
+        });
+
+        mIconE.setOnLongClickListener(new OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(CurrentMode == 1 && mValue > 0){
+                    removeCallbacks(resetToNormalMode);
+                    postDelayed(resetToNormalMode, 3000);
+                    JumpDn(mJump * 10);
+                }
+                else {
+                    mVsClickListener.onEvent();
+                }
+                return true;
             }
         });
 
@@ -175,8 +217,8 @@ public class SpCartButton extends RelativeLayout {
         if(attrs != null){
             final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SpCartButton, 0, 0);
 
-            mColorSet = typedArray.getBoolean(R.styleable.SpCartButton_ColorBackSet, false);
-            mColorDescSet = typedArray.getBoolean(R.styleable.SpCartButton_ColorDescSet, false);
+//            mColorSet = typedArray.getBoolean(R.styleable.SpCartButton_ColorBackSet, false);
+//            mColorDescSet = typedArray.getBoolean(R.styleable.SpCartButton_ColorDescSet, false);
 //            mProgress.setIndeterminate(typedArray.getBoolean(R.styleable.SpCartButton_Indeterminate, true));
 
             int atModeAnimation = typedArray.getInt(R.styleable.SpCartButton_AnimMode, 0);
@@ -225,8 +267,8 @@ public class SpCartButton extends RelativeLayout {
 
             mModeStyle = typedArray.getInt(R.styleable.SpCartButton_ModeStyle, 0);
 
-            Drawable atBackground = typedArray.getDrawable(R.styleable.SpCartButton_SrcBackground);
-            if(atBackground != null) mViewBase.setBackground(atBackground);
+//            Drawable atBackground = typedArray.getDrawable(R.styleable.SpCartButton_SrcBackground);
+//            if(atBackground != null) mViewBase.setBackground(atBackground);
 
 //            Drawable atIcon = typedArray.getDrawable(R.styleable.SpCartButton_IconNormal);
 //            if(atIcon != null) {
@@ -237,7 +279,24 @@ public class SpCartButton extends RelativeLayout {
 //                mIconFail = typedArray.getDrawable(R.styleable.SpCartButton_IconFail);
 //                mIconInfo = typedArray.getDrawable(R.styleable.SpCartButton_IconInfo);
 //            }
+
             int atSize = (int) typedArray.getDimension(R.styleable.SpCartButton_SizeHeight, 50);
+
+            int mTextDescSize = typedArray.getDimensionPixelSize(R.styleable.SpCartButton_TextDescSize, 0);
+            if(mTextDescSize == 0) mTextDescSize = (int) atSize/8;
+            mTextDesc.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextDescSize);
+            mTxtCntCur.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextDescSize);
+            mTextCounterAll.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextDescSize);
+
+            int mTextSize = typedArray.getDimensionPixelSize(R.styleable.SpCartButton_android_textSize, 0);
+            if(mTextSize == 0) mTextSize = (int) atSize/4;
+            mText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
+
+            int mTextCntSize = typedArray.getDimensionPixelSize(R.styleable.SpCartButton_TextCntSize, 0);
+            if(mTextCntSize == 0) mTextCntSize = (int) atSize/3;
+            mTextCnt.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextCntSize);
+            mTextCounter.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextCntSize);
+
 
             RelativeLayout.LayoutParams paramsMain = (RelativeLayout.LayoutParams) mViewBase.getLayoutParams();
             paramsMain.height = atSize;
@@ -291,13 +350,13 @@ public class SpCartButton extends RelativeLayout {
             String atTextDescription = typedArray.getString(R.styleable.SpCartButton_TextDescription);
             if(atTextDescription != null) mTextDescription = atTextDescription;
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                mColorTextDefault = typedArray.getColor(R.styleable.SpCartButton_ColorText, context.getColor(mColorTextDefault));
-                mColorNormal = typedArray.getColor(R.styleable.SpCartButton_ColorNormal, context.getColor(mColorNormal));
-                mColorProgress = typedArray.getColor(R.styleable.SpCartButton_ColorProgress, context.getColor(mColorProgress));
-                mColorSuccess = typedArray.getColor(R.styleable.SpCartButton_ColorSuccess, context.getColor(mColorSuccess));
-                mColorFail = typedArray.getColor(R.styleable.SpCartButton_ColorFail, context.getColor(mColorFail));
-            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                mColorTextDefault = typedArray.getColor(R.styleable.SpCartButton_ColorText, context.getColor(mColorTextDefault));
+//                mColorNormal = typedArray.getColor(R.styleable.SpCartButton_ColorNormal, context.getColor(mColorNormal));
+//                mColorProgress = typedArray.getColor(R.styleable.SpCartButton_ColorBackSet, context.getColor(mColorProgress));
+//                mColorSuccess = typedArray.getColor(R.styleable.SpCartButton_ColorDescSet, context.getColor(mColorSuccess));
+//                mColorFail = typedArray.getColor(R.styleable.SpCartButton_ColorFailInventory, context.getColor(mColorFail));
+//            }
 
         }
 
@@ -305,36 +364,60 @@ public class SpCartButton extends RelativeLayout {
 //        setProgress(0);
     }
 
-    private void JumpDn() {
-        mValue = mValue - mJump;
+    private void JumpDn(float jump) {
+        mValue = mValue - jump;
         if(mValue < mMin) mValue = 0;
         RefreshModeStatus(1, -1);
 
-        RefreshValueText();
+        RefreshValueText(false);
     }
 
-    private void JumpUp() {
-        mValue = mValue + mJump;
+    private void JumpUp(float jump) {
+        mValue = mValue + jump;
         if(mValue < mMin)
             mValue = mMin;
         if(mValue > mMax)
         {
-            mValue = mValue - mJump;
+            mValue = mMax;
             RefreshModeStatus(-2, 0);
         }
-        else if(mInventory - mValue < mJump || mInventory < mValue)
+//        else if(mInventory - mValue < jump || mInventory < mValue)
+        else if(mInventory < mValue)
         {
-            if(mInventory < mValue)
-                mValue = mValue - mJump;
+//            if(mInventory < mValue)
+//                mValue = mInventory - mJump;
+            mValue = mInventory;
             RefreshModeStatus(-1, 0);
         }
         else
             RefreshModeStatus(1, +1);
 
-        RefreshValueText();
+        RefreshValueText(false);
     }
 
-    private void RefreshValueText(){
+    private void RefreshValueText(boolean onStart){
+
+        if(mValueCart >= 0) {
+            float mv = (int) mValueCart + mValue;
+            if (mv == (int)mv)
+                mTxtCntCur.setText(String.valueOf((int)mv));
+            else
+                mTxtCntCur.setText(String.valueOf(mv));
+        }
+
+        if(mValueOther >= 0)
+        {
+            RlyCntAll.setVisibility(VISIBLE);
+            float mv = (int) mValueOther + mValue;
+            if (mv == (int)mv) {
+                mTxtCntAll.setTitleText(String.valueOf((int)mv));
+                mTextCounterAll.setText(String.valueOf((int)mv));
+            }else {
+                mTxtCntAll.setTitleText(String.valueOf(mv));
+                mTextCounterAll.setText(String.valueOf(mv));
+            }
+        }
+
         if(mValue == (int) mValue) {
             mTextCnt.setText(String.valueOf((int) mValue));
             mTextCounter.setText(String.valueOf((int) mValue));
@@ -343,6 +426,8 @@ public class SpCartButton extends RelativeLayout {
             mTextCnt.setText(String.valueOf(mValue));
             mTextCounter.setText(String.valueOf(mValue));
         }
+        if(!onStart)
+            mValueChangeListener.onEvent();
     }
 
     private void RefreshModeStatus(int mModeStatus, int mStatus) {
@@ -438,6 +523,10 @@ public class SpCartButton extends RelativeLayout {
     };
 
     private void SetStatus_Icon(int mModeStatus, int status) {
+        mTxtCntAll.setVisibility(GONE);
+        mTxtCntCur.setVisibility(GONE);
+
+
         if(mModeStatus == 1) {
             if (mValue + mJump > mMax)
                 mModeStatus = -2;
@@ -528,12 +617,14 @@ public class SpCartButton extends RelativeLayout {
                             .repeat(Animation.INFINITE)
                             .playOn(mIcon);
                 }else {
-                    mIcon.setImageResource(R.drawable.ic_baseline_edit_24);
-                    mAnimate = YoYo.with(Techniques.Tada)
-                            .delay(2000)
-                            .duration(5000)
+//                    mTxtCntAll.setVisibility(VISIBLE);
+                    mTxtCntCur.setVisibility(VISIBLE);
+                    mIcon.setImageResource(R.drawable.ic_baseline_shopping_cart_24);
+                    mAnimate = YoYo.with(Techniques.Pulse)
+                            .delay(4000)
+                            .duration(8000)
                             .repeat(Animation.INFINITE)
-                            .playOn(mIcon);
+                            .playOn(findViewById(R.id.rlyIconSha));
                 }
                 break;
             case 1:
@@ -557,7 +648,8 @@ public class SpCartButton extends RelativeLayout {
         this.setMinimumWidth(this.getWidth());
     }
 
-    public SpCartButton setConfig(float valueOther, float value, float inventory, float jump, float min, float max){
+    public SpCartButton setConfig(float valueCart, float valueOther, float value, float inventory, float jump, float min, float max){
+        this.mValueCart = valueCart;
         this.mValueOther = valueOther;
         this.mValue = value;
         this.mInventory = inventory;
@@ -565,9 +657,13 @@ public class SpCartButton extends RelativeLayout {
         this.mMin = min;
         this.mMax = max;
 
-        RefreshValueText();
+        RefreshValueText(true);
 
         return this;
+    }
+
+    public float getValue(){
+        return this.mValue;
     }
 
     public SpCartButton setCurrentMode(int currentMode){
@@ -623,6 +719,30 @@ public class SpCartButton extends RelativeLayout {
 
     public void setOnInfoClickListener(OnInfoClickListener eventListener) {
         mInfoClickListener = eventListener;
+    }
+
+    public interface OnValueChangeListener {
+        void onEvent();
+    }
+
+    public void setOnValueChangeListener(OnValueChangeListener eventListener) {
+        mValueChangeListener = eventListener;
+    }
+
+    public interface OnVsClickListener {
+        void onEvent();
+    }
+
+    public void setOnVsClickListener(OnVsClickListener eventListener) {
+        mVsClickListener = eventListener;
+    }
+
+    public interface OnVeClickListener {
+        void onEvent();
+    }
+
+    public void setOnVeClickListener(OnVeClickListener eventListener) {
+        mVeClickListener = eventListener;
     }
 
 //    public SpCartButton autoBackOnFail(boolean back, long delayMilis, boolean setFailColor){
@@ -838,22 +958,4 @@ public class SpCartButton extends RelativeLayout {
 //        return this;
 //    }
 
-
-    public void startRotate(boolean clockwise, long duration) {
-        Animation rotate;
-        //set up the rotation animation
-        if (clockwise) {
-            rotate = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        }
-        else {
-            rotate = new RotateAnimation(360, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        }
-        //set up some extra variables
-        rotate.setRepeatCount(Animation.INFINITE);
-        rotate.setInterpolator(new LinearInterpolator());
-        rotate.setStartOffset(0);
-        rotate.setRepeatMode(Animation.RESTART);
-        rotate.setDuration(duration);
-        startAnimation(rotate);
-    }
 }
