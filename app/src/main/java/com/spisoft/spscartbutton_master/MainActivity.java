@@ -2,6 +2,8 @@ package com.spisoft.spscartbutton_master;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -17,8 +19,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Typeface TF_B = Typeface.createFromAsset(this.getAssets(), "font/" + "Amine.ttf" + "");
+        Typeface TF_BN = Typeface.createFromAsset(this.getAssets(), "font/" + "BNazanin.ttf" + "");
+
         SpCartBtn = findViewById(R.id.spCartBtn);
-        SpCartBtn.setConfig(21, 2, 0, 300, 1, 3, 100);
+        SpCartBtn.setConfig(21, 2, 0, 300, 1, 0, 100);
+        SpCartBtn.setFaceText(TF_B, getResources().getDimension(R.dimen.sps_txt_sz_14), Color.WHITE);
+        SpCartBtn.setFaceTextDesc(TF_BN, getResources().getDimension(R.dimen.sps_txt_sz_10), Color.LTGRAY);
         SpCartBtn.setOnValueChangeListener(new SpCartButton.OnValueChangeListener() {
             @Override
             public void onEvent() {

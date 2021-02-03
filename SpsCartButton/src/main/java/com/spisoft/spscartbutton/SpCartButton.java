@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.graphics.fonts.FontFamily;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -19,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
@@ -62,6 +65,7 @@ public class SpCartButton extends RelativeLayout {
     private OnVsClickListener mVsClickListener;
     private OnVeClickListener mVeClickListener;
     private RelativeLayout RlyIconSha, RlyTextSha;
+    private int fontFamilyId;
 //    private MaterialCardView cardView;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -103,7 +107,9 @@ public class SpCartButton extends RelativeLayout {
 //        vIconInfo = rootView.findViewById(R.id.vIconInfo);
         mIconE = rootView.findViewById(R.id.vIconE);
         mText = rootView.findViewById(R.id.vText);
+        mText.setSelected(true);
         mTextDesc = rootView.findViewById(R.id.vTextDesc);
+        mTextDesc.setSelected(true);
         mTxtCntCur = rootView.findViewById(R.id.txtCntCur);
         mTxtCntAll = rootView.findViewById(R.id.txtCntAll);
         RlyCntAll = rootView.findViewById(R.id.rlyCntAll);
@@ -246,6 +252,9 @@ public class SpCartButton extends RelativeLayout {
         if(attrs != null){
             final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SpCartButton, 0, 0);
 
+//            fontFamilyId = typedArray.getResourceId(R.styleable.SpCartButton_android_fontFamily, 0);
+//            setFont(fontFamilyId);
+
 //            mColorSet = typedArray.getBoolean(R.styleable.SpCartButton_ColorBackSet, false);
 //            mColorDescSet = typedArray.getBoolean(R.styleable.SpCartButton_ColorDescSet, false);
 //            mProgress.setIndeterminate(typedArray.getBoolean(R.styleable.SpCartButton_Indeterminate, true));
@@ -317,13 +326,14 @@ public class SpCartButton extends RelativeLayout {
 
             int mTextDescSize = typedArray.getDimensionPixelSize(R.styleable.SpCartButton_TextDescSize, 0);
             if(mTextDescSize == 0) mTextDescSize = (int) atSize/8;
-            mTextDesc.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextDescSize);
+            mTextDesc.setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) (mTextDescSize*1.3));
             mTxtCntCur.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextDescSize);
             mTextCounterAll.setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) (mTextDescSize*1.3));
 
             int mTextSize = typedArray.getDimensionPixelSize(R.styleable.SpCartButton_android_textSize, 0);
             if(mTextSize == 0) mTextSize = (int) atSize/4;
             mText.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
+            mTextDesc.setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) (mTextSize*0.7));
 
             int mTextCntSize = typedArray.getDimensionPixelSize(R.styleable.SpCartButton_TextCntSize, 0);
             if(mTextCntSize == 0) mTextCntSize = atSize*2/5;
@@ -715,6 +725,29 @@ public class SpCartButton extends RelativeLayout {
 
         RefreshValueText(true);
 
+        return this;
+    }
+
+    public SpCartButton setFont(int font){
+        fontFamilyId = font;
+        if (fontFamilyId > 0) {
+            mText.setTypeface(ResourcesCompat.getFont(getContext(), fontFamilyId));
+            mTextDesc.setTypeface(ResourcesCompat.getFont(getContext(), fontFamilyId));
+        }
+        return this;
+    }
+
+    public SpCartButton setFaceText(Typeface typeFace, float textSize, int color){
+        mText.setTypeface(typeFace);
+        if(textSize >= 0) mText.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+        if(color >= 0) mText.setTextColor(color);
+        return this;
+    }
+
+    public SpCartButton setFaceTextDesc(Typeface typeFace, float textSize, int color){
+        mTextDesc.setTypeface(typeFace);
+        if(textSize >= 0) mTextDesc.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+        if(color >= 0) mTextDesc.setTextColor(color);
         return this;
     }
 
