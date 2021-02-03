@@ -167,7 +167,7 @@ public class SpCartButton extends RelativeLayout {
                                 @Override
                                 public void call(Animator animator) {
                                     mProgressStart.setIndeterminate(false);
-                                    mVeClickListener.onEvent();
+                                    if(mVeClickListener != null) mVeClickListener.onEvent();
                                 }
                             }).playOn(circleView_St);
                 }
@@ -183,7 +183,7 @@ public class SpCartButton extends RelativeLayout {
                     JumpUp(mJump * 10);
                 }
                 else {
-                    mVeClickListener.onEvent();
+                    if(mVeClickListener != null) mVeClickListener.onEvent();
                 }
                 return true;
             }
@@ -207,7 +207,7 @@ public class SpCartButton extends RelativeLayout {
                                 @Override
                                 public void call(Animator animator) {
                                     mProgressEnd.setIndeterminate(false);
-                                    mVsClickListener.onEvent();
+                                    if(mVsClickListener != null) mVsClickListener.onEvent();
                                 }
                             }).playOn(circleView_Ed);
                 }
@@ -223,7 +223,7 @@ public class SpCartButton extends RelativeLayout {
                     JumpDn(mJump * 10);
                 }
                 else {
-                    mVsClickListener.onEvent();
+                    if(mVsClickListener != null) mVsClickListener.onEvent();
                 }
                 return true;
             }
@@ -489,6 +489,8 @@ public class SpCartButton extends RelativeLayout {
         SetStatus_Counter(mModeStatus);
         SetStatus_Icon(mModeStatus, mStatus);
 
+        if(mTextDesc.getText() == "") mTextDesc.setVisibility(GONE);
+        else  mTextDesc.setVisibility(VISIBLE);
 //        switch (mModeStatus){
 //            case -2:
 //                break;
