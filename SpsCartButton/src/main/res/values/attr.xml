@@ -19,12 +19,12 @@
             <enum name="HideText" value="1"/>
         </attr>
 
-        <attr name="ModeIconPosition" format="enum">
-            <enum name="Left" value="0"/>
-            <enum name="Right" value="1"/>
-            <enum name="Top" value="2"/>
-            <enum name="Bottom" value="3"/>
-        </attr>
+<!--        <attr name="ModeIconPosition" format="enum">-->
+<!--            <enum name="Left" value="0"/>-->
+<!--            <enum name="Right" value="1"/>-->
+<!--            <enum name="Top" value="2"/>-->
+<!--            <enum name="Bottom" value="3"/>-->
+<!--        </attr>-->
 
         <attr name="AnimDuration" format="integer"/>
         <attr name="AnimMode" format="enum">

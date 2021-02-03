@@ -23,6 +23,7 @@ import androidx.core.widget.ContentLoadingProgressBar;
 
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.shape.CornerFamily;
 import com.spisoft.spanim.Techniques;
 import com.spisoft.spanim.YoYo;
 import com.spisoft.spcircleview.CircleView;
@@ -36,7 +37,7 @@ public class SpCartButton extends RelativeLayout {
             mColorSuccess = R.color.colorSuccess, mColorFail = R.color.colorFail, mColorInfo = R.color.colorFail;
     private View mViewBase, RlyCntAll;
     private boolean mColorSet = false, mColorDescSet = false;
-    private int mModeStyle = 0;
+    //    private int mModeStyle = 0;
     private Animation animSel, animation_blink, animation_rotate, animation_rotate_cb , animation_left_to_right , animation_right_to_left, animation_up_to_down, animation_down_to_up;
     private int CurrentMode;
     private boolean mBackOnFail = false, mBackOnInfo = false;
@@ -46,7 +47,6 @@ public class SpCartButton extends RelativeLayout {
     private OnInfoClickListener mInfoClickListener;
     private boolean mInfoKeyShowOnStable;
     private OnValueChangeListener mValueChangeListener;
-
     private int mModeStatus;
     private ImageView mIcon, mIconE;
     private TextView mText, mTextDesc, mTxtCntCur, mTextCounterAll;
@@ -61,6 +61,8 @@ public class SpCartButton extends RelativeLayout {
     private TextView mTextCnt, mTextCounter;
     private OnVsClickListener mVsClickListener;
     private OnVeClickListener mVeClickListener;
+    private RelativeLayout RlyIconSha, RlyTextSha;
+//    private MaterialCardView cardView;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public SpCartButton(Context context) {
@@ -110,6 +112,9 @@ public class SpCartButton extends RelativeLayout {
         mCounterRly = rootView.findViewById(R.id.rlyIconE);
         mButtonRly = rootView.findViewById(R.id.cButtonRly);
 
+        RlyIconSha = rootView.findViewById(R.id.rlyIconSha);
+        RlyTextSha = rootView.findViewById(R.id.rlyTextSha);
+
         mProgress = rootView.findViewById(R.id.vProgressHoz);
         mProgressStart = rootView.findViewById(R.id.cProgressStart);
         mProgressEnd = rootView.findViewById(R.id.cProgressEnd);
@@ -123,6 +128,8 @@ public class SpCartButton extends RelativeLayout {
 //                Toast.makeText(getContext(), "cvs", Toast.LENGTH_SHORT).show();
 //            }
 //        });
+//        cardView = rootView.findViewById(R.id.nnn);
+
 
         MainView = rootView.findViewById(R.id.mainView);
 
@@ -263,31 +270,31 @@ public class SpCartButton extends RelativeLayout {
             }
             animSel.setDuration(typedArray.getInt(R.styleable.SpCartButton_AnimDuration, 1500));
 
-            int atModeIconPosition = typedArray.getInt(R.styleable.SpCartButton_ModeIconPosition, 0);
-            switch (atModeIconPosition){
-                case 0:
-                    mViewBase.setLayoutDirection(LAYOUT_DIRECTION_LOCALE);
-//                    mIT.setOrientation(LinearLayout.HORIZONTAL);
-                    break;
-                case 1:
-                    mViewBase.setLayoutDirection(LAYOUT_DIRECTION_RTL);
-//                    mIT.setOrientation(LinearLayout.HORIZONTAL);
-                    break;
-                case 2:
-                    mViewBase.setLayoutDirection(LAYOUT_DIRECTION_LTR);
-//                    mIT.setOrientation(LinearLayout.HORIZONTAL);
-                    break;
-                case 3:
-                    mViewBase.setLayoutDirection(LAYOUT_DIRECTION_LTR);
-//                    mIT.setOrientation(LinearLayout.VERTICAL);
-                    break;
-                case 4:
-                    mViewBase.setLayoutDirection(LAYOUT_DIRECTION_RTL);
-//                    mIT.setOrientation(LinearLayout.VERTICAL);
-                    break;
-            }
+//            int atModeIconPosition = typedArray.getInt(R.styleable.SpCartButton_ModeIconPosition, 0);
+//            switch (atModeIconPosition){
+//                case 0:
+//                    mViewBase.setLayoutDirection(LAYOUT_DIRECTION_LOCALE);
+////                    mIT.setOrientation(LinearLayout.HORIZONTAL);
+//                    break;
+//                case 1:
+//                    mViewBase.setLayoutDirection(LAYOUT_DIRECTION_RTL);
+////                    mIT.setOrientation(LinearLayout.HORIZONTAL);
+//                    break;
+//                case 2:
+//                    mViewBase.setLayoutDirection(LAYOUT_DIRECTION_LTR);
+////                    mIT.setOrientation(LinearLayout.HORIZONTAL);
+//                    break;
+//                case 3:
+//                    mViewBase.setLayoutDirection(LAYOUT_DIRECTION_LTR);
+////                    mIT.setOrientation(LinearLayout.VERTICAL);
+//                    break;
+//                case 4:
+//                    mViewBase.setLayoutDirection(LAYOUT_DIRECTION_RTL);
+////                    mIT.setOrientation(LinearLayout.VERTICAL);
+//                    break;
+//            }
 
-            mModeStyle = typedArray.getInt(R.styleable.SpCartButton_ModeStyle, 0);
+//            mModeStyle = typedArray.getInt(R.styleable.SpCartButton_ModeStyle, 0);
 
 //            Drawable atBackground = typedArray.getDrawable(R.styleable.SpCartButton_SrcBackground);
 //            if(atBackground != null) mViewBase.setBackground(atBackground);
@@ -304,11 +311,15 @@ public class SpCartButton extends RelativeLayout {
 
             int atSize = (int) typedArray.getDimension(R.styleable.SpCartButton_SizeHeight, 50);
 
+            RelativeLayout.LayoutParams paramsMain = (RelativeLayout.LayoutParams) mViewBase.getLayoutParams();
+            paramsMain.height = atSize;
+            mViewBase.setLayoutParams(paramsMain);
+
             int mTextDescSize = typedArray.getDimensionPixelSize(R.styleable.SpCartButton_TextDescSize, 0);
             if(mTextDescSize == 0) mTextDescSize = (int) atSize/8;
             mTextDesc.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextDescSize);
             mTxtCntCur.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextDescSize);
-            mTextCounterAll.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextDescSize);
+            mTextCounterAll.setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) (mTextDescSize*1.3));
 
             int mTextSize = typedArray.getDimensionPixelSize(R.styleable.SpCartButton_android_textSize, 0);
             if(mTextSize == 0) mTextSize = (int) atSize/4;
@@ -317,25 +328,31 @@ public class SpCartButton extends RelativeLayout {
             int mTextCntSize = typedArray.getDimensionPixelSize(R.styleable.SpCartButton_TextCntSize, 0);
             if(mTextCntSize == 0) mTextCntSize = atSize*2/5;
             mTextCnt.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextCntSize);
-            mTextCounter.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextCntSize);
+            mTextCounter.setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) (mTextCntSize*0.9));
 
+//            RelativeLayout.LayoutParams paramsBtn = (RelativeLayout.LayoutParams) mButtonRly.getLayoutParams();
+//            paramsBtn.setMarginStart(atSize/2);
+//            paramsBtn.setMarginEnd(atSize/2);
+//            mButtonRly.setLayoutParams(paramsBtn);
+//            float radius = getResources().getDimension(R.dimen.sps_lpr_sz_50);
+            MainView.setShapeAppearanceModel(
+                    MainView.getShapeAppearanceModel()
+                            .toBuilder()
+                            .setTopLeftCorner(CornerFamily.CUT, 0)
+                            .setTopRightCorner(CornerFamily.ROUNDED, atSize/2)
+                            .setBottomRightCornerSize(0)
+                            .setBottomLeftCorner(CornerFamily.ROUNDED, atSize/2)
+                            .build());
 
-            RelativeLayout.LayoutParams paramsMain = (RelativeLayout.LayoutParams) mViewBase.getLayoutParams();
-            paramsMain.height = atSize;
-            mViewBase.setLayoutParams(paramsMain);
-
-            RelativeLayout.LayoutParams paramsBtn = (RelativeLayout.LayoutParams) mButtonRly.getLayoutParams();
-            paramsBtn.setMarginStart(atSize/2);
-            paramsBtn.setMarginEnd(atSize/2);
-            mButtonRly.setLayoutParams(paramsBtn);
-
-            ViewGroup.LayoutParams params_circleView_St = circleView_St.getLayoutParams();
+            ViewGroup.LayoutParams params_circleView_St = RlyTextSha.getLayoutParams();
             params_circleView_St.width = atSize;
-            circleView_St.setLayoutParams(params_circleView_St);
+            params_circleView_St.height = atSize;
+            RlyTextSha.setLayoutParams(params_circleView_St);
 
-            ViewGroup.LayoutParams params_circleView_Ed = circleView_Ed.getLayoutParams();
+            ViewGroup.LayoutParams params_circleView_Ed = RlyIconSha.getLayoutParams();
             params_circleView_Ed.width = atSize;
-            circleView_Ed.setLayoutParams(params_circleView_Ed);
+            params_circleView_Ed.height = atSize;
+            RlyIconSha.setLayoutParams(params_circleView_Ed);
 
             mIcon.setPadding(atSize/4, atSize/4, atSize/4, atSize/4);
             mIconE.setPadding(atSize/4, atSize/4, atSize/4, atSize/4);
@@ -654,11 +671,16 @@ public class SpCartButton extends RelativeLayout {
 //                    mTxtCntAll.setVisibility(VISIBLE);
                     mTxtCntCur.setVisibility(VISIBLE);
                     mIcon.setImageResource(R.drawable.ic_baseline_shopping_cart_24);
-                    mAnimate = YoYo.with(Techniques.Pulse)
-                            .delay(4000)
-                            .duration(8000)
-                            .repeat(Animation.INFINITE)
-                            .playOn(findViewById(R.id.rlyIconSha));
+//                    mAnimate = YoYo.with(Techniques.Swing)
+//                            .delay(4000)
+//                            .duration(8000)
+//                            .repeat(Animation.INFINITE)
+//                            .playOn(findViewById(R.id.rlyIconSha));
+//                    mAnimate = YoYo.with(Techniques.Swing)
+//                            .delay(4000)
+//                            .duration(8000)
+//                            .repeat(Animation.INFINITE)
+//                            .playOn(findViewById(R.id.rlyTextSha));
                 }
                 break;
             case 1:
