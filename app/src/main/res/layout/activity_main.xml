@@ -33,7 +33,7 @@
                 app:TextMinimum="min"
                 app:TextNoInventory="inventory"
                 app:TextDescription="تست1 تست2 23"
-                app:SizeHeight="@dimen/sps_lpr_sz_60">
+                app:SizeHeight="@dimen/sps_lpr_sz_50">
             </com.spisoft.spscartbutton.SpCartButton>
         </RelativeLayout>
     </RelativeLayout>
