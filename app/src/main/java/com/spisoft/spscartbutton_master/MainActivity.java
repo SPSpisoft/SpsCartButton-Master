@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         SpCartBtn = findViewById(R.id.spCartBtn);
         SpCartBtn.setConfig(21, 2, 0, 300, 1, 4, 100);
-        SpCartBtn.setFaceText(TF_B, getResources().getDimension(R.dimen.sps_txt_sz_14), Color.WHITE);
+        SpCartBtn.setFaceText(TF_B, getResources().getDimension(R.dimen.sps_txt_sz_14), Color.WHITE).setActFillColor(Color.GREEN);
         SpCartBtn.setFaceTextDesc(TF_BN, getResources().getDimension(R.dimen.sps_txt_sz_10), Color.LTGRAY);
         SpCartBtn.setOnValueChangeListener(new SpCartButton.OnValueChangeListener() {
             @Override
@@ -42,6 +43,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onEvent() {
                 Toast.makeText(MainActivity.this, "VS : "+ SpCartBtn.getValue(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        SpCartBtn.setOnStartTaskListener(new SpCartButton.OnStartTaskListener() {
+            @Override
+            public void onEvent(double newValue) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        SpCartBtn.resetValues(20, newValue, 30);
+                    }
+                }, 2000);
             }
         });
     }

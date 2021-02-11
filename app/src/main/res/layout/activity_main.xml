@@ -30,6 +30,7 @@
                 app:ModeStatus="STATUS_NORMAL_NOT_SEL"
                 app:TextAddToCart="افزودن به سبد خرید"
                 android:textSize="@dimen/sps_txt_sz_16"
+                app:JumpTask="true"
                 app:TextMaximum="MAX"
                 app:TextNoInventory="inventory"
                 app:SizeHeight="@dimen/sps_lpr_sz_50">

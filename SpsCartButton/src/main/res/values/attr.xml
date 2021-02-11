@@ -57,6 +57,9 @@
         <attr name="android:textSize"/>
         <attr name="android:textColor"/>
         <attr name="TextPadding" format="integer"/>
+        <attr name="JumpTask" format="boolean"/>
+        <attr name="ActFillColor" format="color"/>
+
 
         <attr name="TextCntSize" format="dimension"/>
         <attr name="TextDescSize" format="dimension"/>
