@@ -73,6 +73,7 @@ public class SpCartButton extends RelativeLayout {
     private YoYo.YoYoString mYoYo2 = null;
     private int mActFillColor = Color.GREEN;
     private int mActFillColorDefault = Color.DKGRAY;
+    private boolean inTask = false;
 
 //    private MaterialCardView cardView;
 
@@ -168,10 +169,12 @@ public class SpCartButton extends RelativeLayout {
                         postDelayed(resetToNormalMode, 3000);
                     }
                     else {
-                        if(mStartTaskListener != null) {
+                        if(mStartTaskListener != null && (getCurrentMode() == 0 || !inTask)) {
                             RefreshModeStatus(1, +1);
-                            if(mValue != CheckJump(mJump))
+                            if(mValue != CheckJump(mJump)) {
+                                inTask = true;
                                 mStartTaskListener.onEvent(CheckJump(mJump));
+                            }
 //                            else
 //                                RefreshValueText(false);
                         }
@@ -204,11 +207,13 @@ public class SpCartButton extends RelativeLayout {
                         postDelayed(resetToNormalMode, 3000);
                     }
                     else {
-                        if(mStartTaskListener != null) {
+                        if(mStartTaskListener != null && (getCurrentMode() == 0 || !inTask)) {
                             RefreshModeStatus(1, +1);
 
-                            if(mValue != CheckJump(mJump*10))
-                                mStartTaskListener.onEvent(CheckJump(mJump*10));
+                            if(mValue != CheckJump(mJump*10)) {
+                                inTask = true;
+                                mStartTaskListener.onEvent(CheckJump(mJump * 10));
+                            }
                         }
                     }
                 }
@@ -229,11 +234,13 @@ public class SpCartButton extends RelativeLayout {
                         postDelayed(resetToNormalMode, 3000);
                     }
                     else {
-                        if(mStartTaskListener != null) {
+                        if(mStartTaskListener != null && (getCurrentMode() == 0 || !inTask)) {
                             RefreshModeStatus(1, -1);
 //                            mStartTaskListener.onEvent(-mJump);
-                            if(mValue != CheckJump(-mJump))
+                            if(mValue != CheckJump(-mJump)) {
+                                inTask = true;
                                 mStartTaskListener.onEvent(CheckJump(-mJump));
+                            }
                         }
                     }
                 }
@@ -264,11 +271,13 @@ public class SpCartButton extends RelativeLayout {
                         postDelayed(resetToNormalMode, 3000);
                     }
                     else {
-                        if(mStartTaskListener != null) {
+                        if(mStartTaskListener != null && (getCurrentMode() == 0 || !inTask)) {
                             RefreshModeStatus(1, -1);
 //                            mStartTaskListener.onEvent(-mJump*10);
-                            if(mValue != CheckJump(-mJump*10))
-                                mStartTaskListener.onEvent(CheckJump(-mJump*10));
+                            if(mValue != CheckJump(-mJump*10)) {
+                                inTask = true;
+                                mStartTaskListener.onEvent(CheckJump(-mJump * 10));
+                            }
                         }
                     }
                 }
@@ -845,6 +854,7 @@ public class SpCartButton extends RelativeLayout {
     }
 
     public SpCartButton resetValues(double valueCart, double value, double inventory){
+        this.inTask = false;
         this.mValueCart = valueCart;
         this.mValue = value;
         this.mInventory = inventory;

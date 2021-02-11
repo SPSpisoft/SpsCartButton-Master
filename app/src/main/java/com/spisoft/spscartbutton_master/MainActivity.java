@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         SpCartBtn = findViewById(R.id.spCartBtn);
         SpCartBtn.setConfig(21, 2, 0, 300, 1, 4, 100);
-        SpCartBtn.setFaceText(TF_B, getResources().getDimension(R.dimen.sps_txt_sz_14), Color.WHITE).setActFillColor(Color.GREEN);
+        SpCartBtn.setFaceText(TF_B, getResources().getDimension(R.dimen.sps_txt_sz_14), Color.WHITE).setActFillColor(Color.LTGRAY);
         SpCartBtn.setFaceTextDesc(TF_BN, getResources().getDimension(R.dimen.sps_txt_sz_10), Color.LTGRAY);
         SpCartBtn.setOnValueChangeListener(new SpCartButton.OnValueChangeListener() {
             @Override
