@@ -51,7 +51,7 @@ public class SpCartButton extends RelativeLayout {
     private OnInfoClickListener mInfoClickListener;
     private boolean mInfoKeyShowOnStable;
     private OnValueChangeListener mValueChangeListener;
-    private int mModeStatus;
+    private int mModeStatus, mModeFormat = 0;
     private ImageView mIcon, mIconE;
     private TextView mText, mTextDesc, mTxtCntCur, mTextCounterAll;
     private RelativeLayout mButtonRly, mCounterRly;
@@ -60,7 +60,7 @@ public class SpCartButton extends RelativeLayout {
     private CircularProgressView mProgressStart, mProgressEnd;
     private MaterialCardView MainView;
     private YoYo.YoYoString mAnimate = null;
-    private double mValueCart = -1, mValueOther = -1,  mValue = 0, mInventory = 12, mJump = 1, mMin = 2, mMax = 10;
+    private double mValueCart = -1, mValueOther = -1,  mValue = 0, mInventory00 = 12, mJump = 1, mMin = 2, mMax = 10;
     private boolean mAvailable;
     private TextView mTextCnt, mTextCounter;
     private OnVsClickListener mVsClickListener;
@@ -74,6 +74,8 @@ public class SpCartButton extends RelativeLayout {
     private int mActFillColor = Color.GREEN;
     private int mActFillColorDefault = Color.DKGRAY;
     private boolean inTask = false;
+    private double mInventory = 0;
+    private boolean mInvAdd = false;
 
 //    private MaterialCardView cardView;
 
@@ -445,6 +447,7 @@ public class SpCartButton extends RelativeLayout {
             int atTextPadding = typedArray.getInt(R.styleable.SpCartButton_TextPadding, 10);
             mText.setPadding(atTextPadding, atTextPadding, atTextPadding, atTextPadding);
 
+            mModeFormat = typedArray.getInt(R.styleable.SpCartButton_ModeFormat, 0);
             int atModeStatus = typedArray.getInt(R.styleable.SpCartButton_ModeStatus, 0);
             mModeStatus = atModeStatus;
             RefreshModeStatus(mModeStatus, 0);
@@ -493,12 +496,13 @@ public class SpCartButton extends RelativeLayout {
             mValue = mMax;
             RefreshModeStatus(-2, 0);
         }
-//        else if(mInventory - mValue < jump || mInventory < mValue)
-        else if(mInventory < mValue)
+        else if(mModeFormat == 0 && mInventory < mValue)
         {
-//            if(mInventory < mValue)
-//                mValue = mInventory - mJump;
             mValue = mInventory;
+            RefreshModeStatus(-1, 0);
+        }
+        else if(mModeFormat == 1 && !mInvAdd)
+        {
             RefreshModeStatus(-1, 0);
         }
         else
@@ -517,8 +521,12 @@ public class SpCartButton extends RelativeLayout {
                 ret = mMax;
                 RefreshModeStatus(-2, 0);
             }
-            else if (mInventory < mValue + jump) {
+            else if (mModeFormat == 0 && mInventory < mValue + jump){
                 ret = mInventory;
+                RefreshModeStatus(-1, 0);
+            }
+            else if (mModeFormat == 1 && !mInvAdd) {
+                ret = mValue;
                 RefreshModeStatus(-1, 0);
             }else
                 ret = mValue + jump;
@@ -591,8 +599,13 @@ public class SpCartButton extends RelativeLayout {
         }
         if(!onStart)
             mValueChangeListener.onEvent();
-        else
+        else{
             RefreshModeStatus(0, 0);
+            if(!mInvAdd){
+                RefreshModeStatus(-1, 0);
+//                SetStatus_Icon(1,0);
+            }
+        }
     }
 
     private void RefreshModeStatus(int mModeStatus, int mStatus) {
@@ -626,7 +639,8 @@ public class SpCartButton extends RelativeLayout {
                 break;
             case -1:
                 mText.setText(mTextInventory);
-                mTextDesc.setText(mTextInventory);
+                mTextDesc.setText("");
+                mTextDesc.setVisibility(GONE);
                 break;
             case 0:
                 if(mValue == 0)
@@ -710,7 +724,7 @@ public class SpCartButton extends RelativeLayout {
         if(mModeStatus == 1) {
             if (mValue + mJump > mMax)
                 mModeStatus = -2;
-            else if (mValue + mJump > mInventory)
+            else if ((mModeFormat == 0 && mValue + mJump > mInventory) || (mModeFormat == 1 && !mInvAdd))
                 mModeStatus = -1;
             else if (status != 0)
             {
@@ -791,6 +805,7 @@ public class SpCartButton extends RelativeLayout {
                 break;
             case -1:
                 mTextDesc.setText(mTextInventory);
+                if(mText.getText().equals(mTextInventory)) mTextDesc.setText("");
                 mIcon.setImageResource(R.drawable.ic_baseline_cancel_24);
                 break;
             case 0:
@@ -839,24 +854,27 @@ public class SpCartButton extends RelativeLayout {
         this.setMinimumWidth(this.getWidth());
     }
 
-    public SpCartButton setConfig(double valueCart, double valueOther, double value, double inventory, double jump, double min, double max){
+    public SpCartButton setConfig(double valueCart, double valueOther, double value, double inventory, double jump, double min, double max, boolean invAdd){
         this.mValueCart = valueCart;
         this.mValueOther = valueOther;
         this.mValue = value;
+        this.mInvAdd = invAdd;
         this.mInventory = inventory;
         this.mJump = jump;
         this.mMin = min;
         this.mMax = max;
-
+//        CheckJump()
+//        RefreshModeStatus(-1, 0);
         RefreshValueText(true);
 
         return this;
     }
 
-    public SpCartButton resetValues(double valueCart, double value, double inventory){
+    public SpCartButton resetValues(double valueCart, double value, double inventory, boolean invAdd){
         this.inTask = false;
         this.mValueCart = valueCart;
         this.mValue = value;
+        this.mInvAdd = invAdd;
         this.mInventory = inventory;
 //        CheckJump(0);
         RefreshValueText(false);

@@ -14,6 +14,11 @@
 <!--            <enum name="STATUS_SELECTED" value="2"/>-->
         </attr>
 
+        <attr name="ModeFormat" format="enum">
+            <enum name="Counter" value="0"/>
+            <enum name="Boolean" value="1"/>
+        </attr>
+
         <attr name="ModeStyle" format="enum">
             <enum name="Normal" value="0"/>
             <enum name="HideText" value="1"/>

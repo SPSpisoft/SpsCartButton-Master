@@ -28,6 +28,7 @@
                 android:layout_width="@dimen/sps_lpr_sz_250"
                 android:layout_alignParentEnd="true"
                 app:ModeStatus="STATUS_NORMAL_NOT_SEL"
+                app:ModeFormat="Boolean"
                 app:TextAddToCart="افزودن به سبد خرید"
                 android:textSize="@dimen/sps_txt_sz_16"
                 app:JumpTask="true"
