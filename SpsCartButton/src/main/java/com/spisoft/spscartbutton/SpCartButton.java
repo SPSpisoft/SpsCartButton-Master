@@ -60,7 +60,7 @@ public class SpCartButton extends RelativeLayout {
     private CircularProgressView mProgressStart, mProgressEnd;
     private MaterialCardView MainView;
     private YoYo.YoYoString mAnimate = null;
-    private double mValueCart = -1, mValueOther = -1,  mValue = 0, mInventory00 = 12, mJump = 1, mMin = 2, mMax = 10;
+    private double mValueCart = -1, mValueOther = -1,  mValue = 0, mJump = 1, mMin = 1, mMax = 0;
     private boolean mAvailable;
     private TextView mTextCnt, mTextCounter;
     private OnVsClickListener mVsClickListener;
@@ -491,7 +491,7 @@ public class SpCartButton extends RelativeLayout {
         mValue = mValue + jump;
         if(mValue < mMin)
             mValue = mMin;
-        if(mValue > mMax)
+        if(mMax > 0 && mValue > mMax)
         {
             mValue = mMax;
             RefreshModeStatus(-2, 0);
@@ -517,7 +517,7 @@ public class SpCartButton extends RelativeLayout {
             if (mValue + jump < mMin) {
                 ret = mMin;
             }
-            else if (mValue + jump > mMax) {
+            else if (mMax > 0 && mValue + jump > mMax) {
                 ret = mMax;
                 RefreshModeStatus(-2, 0);
             }
@@ -722,7 +722,7 @@ public class SpCartButton extends RelativeLayout {
         if(mYoYo2 != null) mYoYo2.stop();
 
         if(mModeStatus == 1) {
-            if (mValue + mJump > mMax)
+            if (mMax > 0 && mValue + mJump > mMax)
                 mModeStatus = -2;
             else if ((mModeFormat == 0 && mValue + mJump > mInventory) || (mModeFormat == 1 && !mInvAdd))
                 mModeStatus = -1;
