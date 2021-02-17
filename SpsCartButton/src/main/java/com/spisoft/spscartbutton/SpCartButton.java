@@ -526,7 +526,7 @@ public class SpCartButton extends RelativeLayout {
                 RefreshModeStatus(-1, 0);
             }
             else if (mModeFormat == 1 && !mInvAdd) {
-                ret = mValue;
+                ret = mValue + jump;
                 RefreshModeStatus(-1, 0);
             }else
                 ret = mValue + jump;
