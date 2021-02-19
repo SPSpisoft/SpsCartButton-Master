@@ -27,7 +27,8 @@
 
         <attr name="ModeStyle" format="enum">
             <enum name="Radius" value="0"/>
-            <enum name="LeftS" value="1"/>
+            <enum name="LParallelogram" value="1"/>
+            <enum name="Trapeze" value="2"/>
         </attr>
 
 <!--        <attr name="ModeStyle" format="enum">-->

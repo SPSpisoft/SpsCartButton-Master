@@ -5,6 +5,7 @@
     <color name="colorAccent">#E91E63</color>
 
     <color name="sps_gray">#5A5A5A</color>
+    <color name="sps_green">#083E0A</color>
     <color name="colorText">#FC242424</color>
     <color name="colorNormal">#FFFFFF</color>
     <color name="colorProgress">#A2DAE6</color>

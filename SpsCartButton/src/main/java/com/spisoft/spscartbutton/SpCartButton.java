@@ -73,7 +73,9 @@ public class SpCartButton extends RelativeLayout {
     private boolean JumpTask = false;
     private YoYo.YoYoString mYoYo = null;
     private YoYo.YoYoString mYoYo2 = null;
-    private int mActFillColor = Color.GREEN;
+    private int mActStrokeColor = Color.WHITE;
+    private int mActStrokeColorDefault = Color.WHITE;
+    private int mActFillColor;
     private int mActFillColorDefault = Color.DKGRAY;
     private boolean inTask = false;
     private double mInventory = 0;
@@ -424,6 +426,16 @@ public class SpCartButton extends RelativeLayout {
                                     .setBottomLeftCorner(CornerFamily.CUT, 0)
                                     .build());
                     break;
+                case 2:
+                    MainView.setShapeAppearanceModel(
+                            MainView.getShapeAppearanceModel()
+                                    .toBuilder()
+                                    .setTopLeftCorner(CornerFamily.ROUNDED, atSize/2)
+                                    .setTopRightCorner(CornerFamily.ROUNDED, atSize/2)
+                                    .setBottomRightCorner(CornerFamily.CUT, 0)
+                                    .setBottomLeftCorner(CornerFamily.CUT, 0)
+                                    .build());
+                    break;
                 default:
                     MainView.setShapeAppearanceModel(
                             MainView.getShapeAppearanceModel()
@@ -744,6 +756,8 @@ public class SpCartButton extends RelativeLayout {
         mModeStatus = modeStatus;
         circleView_Ed.setFillColor(mActFillColorDefault);
         circleView_St.setFillColor(mActFillColorDefault);
+        circleView_Ed.setBackgroundColor(mActStrokeColorDefault);
+        circleView_St.setBackgroundColor(mActStrokeColorDefault);
         mTxtCntAll.setVisibility(GONE);
         mTxtCntCur.setVisibility(GONE);
         if(mYoYo != null) mYoYo.stop();
@@ -872,6 +886,8 @@ public class SpCartButton extends RelativeLayout {
             case 1:
                 circleView_Ed.setFillColor(mActFillColor);
                 circleView_St.setFillColor(mActFillColor);
+                circleView_Ed.setBackgroundColor(mActStrokeColor);
+                circleView_St.setBackgroundColor(mActStrokeColor);
                 mIcon.setImageResource(R.drawable.ic_baseline_add_24);
                 break;
         }
