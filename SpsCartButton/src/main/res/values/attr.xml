@@ -11,18 +11,29 @@
             <enum name="STATUS_NO_INVENTORY" value="-1"/>
             <enum name="STATUS_NORMAL_NOT_SEL" value="0"/>
             <enum name="STATUS_SELECT_MODE" value="1"/>
+<!--            <enum name="STATUS_CART_MODE" value="2"/>-->
 <!--            <enum name="STATUS_SELECTED" value="2"/>-->
         </attr>
 
-        <attr name="ModeFormat" format="enum">
-            <enum name="Counter" value="0"/>
-            <enum name="Boolean" value="1"/>
+<!--        <attr name="ModeFormat" format="enum">-->
+<!--            <enum name="Counter" value="0"/>-->
+<!--            <enum name="TaskDialog" value="1"/>-->
+<!--        </attr>-->
+
+        <attr name="Model" format="enum">
+            <enum name="Default" value="0"/>
+            <enum name="CartSet" value="1"/>
         </attr>
 
         <attr name="ModeStyle" format="enum">
-            <enum name="Normal" value="0"/>
-            <enum name="HideText" value="1"/>
+            <enum name="Radius" value="0"/>
+            <enum name="LeftS" value="1"/>
         </attr>
+
+<!--        <attr name="ModeStyle" format="enum">-->
+<!--            <enum name="Normal" value="0"/>-->
+<!--            <enum name="HideText" value="1"/>-->
+<!--        </attr>-->
 
 <!--        <attr name="ModeIconPosition" format="enum">-->
 <!--            <enum name="Left" value="0"/>-->

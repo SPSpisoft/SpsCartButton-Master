@@ -31,9 +31,7 @@
             app:cardBackgroundColor="@android:color/holo_red_light"
             app:cardElevation="1dp"
             app:rippleColor="@color/colorPrimary"
-            app:strokeColor="@android:color/holo_red_dark">
-
-        </com.google.android.material.card.MaterialCardView>
+            app:strokeColor="@android:color/holo_red_dark"/>
 
     </RelativeLayout>
 

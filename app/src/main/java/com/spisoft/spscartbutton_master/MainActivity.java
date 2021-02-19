@@ -13,7 +13,7 @@ import com.spisoft.spscartbutton.SpCartButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SpCartButton SpCartBtn;
+    private SpCartButton SpCartBtn, SpCartBtnCart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +23,22 @@ public class MainActivity extends AppCompatActivity {
         Typeface TF_B = Typeface.createFromAsset(this.getAssets(), "font/" + "Amine.ttf" + "");
         Typeface TF_BN = Typeface.createFromAsset(this.getAssets(), "font/" + "BNazanin.ttf" + "");
 
+        SpCartBtnCart = findViewById(R.id.spCartBtn0);
+        SpCartBtnCart.setConfig(0, 0, 3, 0, 1, 2, 10, true);
+        SpCartBtnCart.setOnStartTaskListener(new SpCartButton.OnStartTaskListener() {
+            @Override
+            public void onEvent(double newValue) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        SpCartBtnCart.resetValues(20, newValue, 0, newValue < 5);
+                    }
+                }, 2000);
+            }
+        });
+
         SpCartBtn = findViewById(R.id.spCartBtn);
-        SpCartBtn.setConfig(21, 0, 0, 0, 1, 1, 100, false);
+        SpCartBtn.setConfig(21, 0, 0, 0, 1, 1, 7, true);
         SpCartBtn.setFaceText(TF_B, getResources().getDimension(R.dimen.sps_txt_sz_14), Color.WHITE).setActFillColor(Color.LTGRAY);
         SpCartBtn.setFaceTextDesc(TF_BN, getResources().getDimension(R.dimen.sps_txt_sz_10), Color.LTGRAY);
         SpCartBtn.setOnValueChangeListener(new SpCartButton.OnValueChangeListener() {
@@ -52,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        SpCartBtn.resetValues(20, newValue, 0, newValue < 3);
+                        SpCartBtn.resetValues(20, newValue, 0, true);
                     }
                 }, 2000);
             }
