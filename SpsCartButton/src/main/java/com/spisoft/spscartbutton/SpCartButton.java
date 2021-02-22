@@ -62,7 +62,7 @@ public class SpCartButton extends RelativeLayout {
     private CircularProgressView mProgressStart, mProgressEnd;
     private MaterialCardView MainView;
     private YoYo.YoYoString mAnimate = null;
-    private double mValueCart = -1, mValueOther = -1,  mValue = 0, mJump = 1, mMin = 1, mMax = 0;
+    private double mValueCart = -1, mValueSum = -1,  mValue = 0, mJump = 1, mMin = 1, mMax = 0;
     private boolean mAvailable;
     private TextView mTextCnt, mTextCounter;
     private OnVsClickListener mVsClickListener;
@@ -592,23 +592,21 @@ public class SpCartButton extends RelativeLayout {
         SetStatus_Counter(1);
 
         if(mValueCart >= 0) {
-            double mv = (int) mValueCart + mValue;
-            if (mv == (int)mv)
-                mTxtCntCur.setText(String.valueOf((int)mv));
+            if (mValueCart == (int)mValueCart)
+                mTxtCntCur.setText(String.valueOf((int)mValueCart));
             else
-                mTxtCntCur.setText(String.valueOf(mv));
+                mTxtCntCur.setText(String.valueOf(mValueCart));
         }
 
-        if(mValueOther >= 0)
+        if(mValueSum >= 0)
         {
             RlyCntAll.setVisibility(VISIBLE);
-            double mv = (int) mValueOther + mValue;
-            if (mv == (int)mv) {
-                mTxtCntAll.setTitleText(String.valueOf((int)mv));
-                mTextCounterAll.setText(String.valueOf((int)mv));
+            if (mValueSum == (int)mValueSum) {
+                mTxtCntAll.setTitleText(String.valueOf((int)mValueSum));
+                mTextCounterAll.setText(String.valueOf((int)mValueSum));
             }else {
-                mTxtCntAll.setTitleText(String.valueOf(mv));
-                mTextCounterAll.setText(String.valueOf(mv));
+                mTxtCntAll.setTitleText(String.valueOf(mValueSum));
+                mTextCounterAll.setText(String.valueOf(mValueSum));
             }
         }
 
@@ -729,7 +727,7 @@ public class SpCartButton extends RelativeLayout {
 //                        .playOn(mTextCnt);
             mTextCnt.setVisibility(GONE);
 
-            if (mValue > 0 || mValueOther > 0) {
+            if (mValueSum > 0) {
                 mCounterRly.setVisibility(VISIBLE);
                 YoYo.with(Techniques.DropOut)
                         .duration(400)
@@ -900,9 +898,9 @@ public class SpCartButton extends RelativeLayout {
         this.setMinimumWidth(this.getWidth());
     }
 
-    public SpCartButton setConfig(double valueCart, double valueOther, double value, double inventory, double jump, double min, double max, boolean invAdd){
+    public SpCartButton setConfig(double valueCart, double valueSum, double value, double inventory, double jump, double min, double max, boolean invAdd){
         this.mValueCart = valueCart;
-        this.mValueOther = valueOther;
+        this.mValueSum = valueSum;
         this.mValue = value;
         this.mInvAdd = invAdd;
         this.mInventory = inventory;
@@ -916,9 +914,10 @@ public class SpCartButton extends RelativeLayout {
         return this;
     }
 
-    public SpCartButton resetValues(double valueCart, double value, double inventory, boolean invAdd){
+    public SpCartButton resetValues(double valueCart, double valueSum, double value, double inventory, boolean invAdd){
         this.inTask = false;
         this.mValueCart = valueCart;
+        this.mValueSum = valueSum;
         this.mValue = value;
         this.mInvAdd = invAdd;
         this.mInventory = inventory;
