@@ -747,7 +747,6 @@ public class SpCartButton extends RelativeLayout {
         @Override
         public void run() {
             if(mModel != 1)
-                Toast.makeText(mContext, "NNNNNNNNNNN", Toast.LENGTH_SHORT).show();
                 RefreshModeStatus(0, 0);
         }
     };
@@ -923,9 +922,7 @@ public class SpCartButton extends RelativeLayout {
         this.mValue = value;
         this.mInvAdd = invAdd;
         this.mInventory = inventory;
-//        CheckJump(0);
-        RefreshValueText(false);
-//        RefreshModeStatus(0, 0);
+//        RefreshValueText(false);
         postDelayed(resetToNormalMode, 3000);
         return this;
     }
