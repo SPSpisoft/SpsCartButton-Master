@@ -747,7 +747,7 @@ public class SpCartButton extends RelativeLayout {
 //                break;
     }
 
-    private final Runnable resetToNormalMode = new Runnable() {
+    public final Runnable resetToNormalMode = new Runnable() {
         @Override
         public void run() {
             if(mModel != 1)
@@ -927,7 +927,8 @@ public class SpCartButton extends RelativeLayout {
         this.mInvAdd = invAdd;
         this.mInventory = inventory;
         RefreshValueText(false);
-        handler.postDelayed(resetToNormalMode, 3000);
+        if(handler != null)
+            handler.postDelayed(resetToNormalMode, 3000);
         return this;
     }
 

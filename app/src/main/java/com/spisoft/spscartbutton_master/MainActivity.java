@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        SpCartBtn.resetValues(new Handler() ,20,0, newValue, 0, true);
+                        SpCartBtn.resetValues(null ,20,0, newValue, 0, true);
+                        SpCartBtn.postDelayed(SpCartBtn.resetToNormalMode, 5000);
                     }
                 }, 2000);
             }
