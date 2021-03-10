@@ -21,6 +21,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
@@ -746,6 +747,7 @@ public class SpCartButton extends RelativeLayout {
         @Override
         public void run() {
             if(mModel != 1)
+                Toast.makeText(mContext, "NNNNNNNNNNN", Toast.LENGTH_SHORT).show();
                 RefreshModeStatus(0, 0);
         }
     };
