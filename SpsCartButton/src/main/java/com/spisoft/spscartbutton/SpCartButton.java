@@ -634,7 +634,7 @@ public class SpCartButton extends RelativeLayout {
             }
     }
 
-    private void RefreshModeStatus(int mModeStatus, int mStatus) {
+    public void RefreshModeStatus(int mModeStatus, int mStatus) {
 //        if(CurrentMode != 2)
         if(mModel == 1 && mModeStatus == 0){
             mModeStatus = 1;
