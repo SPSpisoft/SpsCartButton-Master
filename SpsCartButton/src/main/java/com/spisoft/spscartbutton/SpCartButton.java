@@ -10,6 +10,8 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.fonts.FontFamily;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -115,6 +117,8 @@ public class SpCartButton extends RelativeLayout {
         rootView = inflate(context, R.layout.sps_cart_button, this);
 
         mContext = context;
+        postDelayed(resetToNormalMode, 3000);
+
         mViewBase = rootView.findViewById(R.id.viewBase);
         mTextCnt = rootView.findViewById(R.id.vTextCnt);
         mTextCounter = rootView.findViewById(R.id.vTextCounter);
@@ -915,15 +919,15 @@ public class SpCartButton extends RelativeLayout {
         return this;
     }
 
-    public SpCartButton resetValues(double valueCart, double valueSum, double value, double inventory, boolean invAdd){
+    public SpCartButton resetValues(Handler handler, double valueCart, double valueSum, double value, double inventory, boolean invAdd){
         this.inTask = false;
         this.mValueCart = valueCart;
         this.mValueSum = valueSum;
         this.mValue = value;
         this.mInvAdd = invAdd;
         this.mInventory = inventory;
-//        RefreshValueText(false);
-        postDelayed(resetToNormalMode, 3000);
+        RefreshValueText(false);
+        handler.postDelayed(resetToNormalMode, 3000);
         return this;
     }
 
