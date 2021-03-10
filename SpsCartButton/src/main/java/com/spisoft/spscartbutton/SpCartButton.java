@@ -920,7 +920,7 @@ public class SpCartButton extends RelativeLayout {
         return this;
     }
 
-    public SpCartButton resetValues(Handler handler, double valueCart, double valueSum, double value, double inventory, boolean invAdd){
+    public SpCartButton resetValues(double valueCart, double valueSum, double value, double inventory, boolean invAdd){
         this.inTask = false;
         this.mValueCart = valueCart;
         this.mValueSum = valueSum;
@@ -929,7 +929,7 @@ public class SpCartButton extends RelativeLayout {
         this.mInventory = inventory;
         RefreshValueText(false);
 //        if(handler != null)
-//            handler.postDelayed(resetToNormalMode, 3000);
+            postDelayed(resetToNormalMode, 3000);
         return this;
     }
 

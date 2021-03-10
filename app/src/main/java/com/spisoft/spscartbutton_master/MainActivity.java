@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        SpCartBtnCart.resetValues(new Handler() ,20, 0, newValue, 0, newValue < 5);
+                        SpCartBtnCart.resetValues(20, 0, newValue, 0, newValue < 5);
                     }
                 }, 2000);
             }
@@ -66,8 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        SpCartBtn.resetValues(null ,20,0, newValue, 0, true);
-                        SpCartBtn.postDelayed(SpCartBtn.resetToNormalMode, 5000);
+                        SpCartBtn.resetValues(20,0, newValue, 0, true);
+//                        SpCartBtn.postDelayed(SpCartBtn.resetToNormalMode, 5000);
                     }
                 }, 2000);
             }
