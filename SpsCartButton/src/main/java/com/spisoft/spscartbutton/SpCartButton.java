@@ -927,9 +927,8 @@ public class SpCartButton extends RelativeLayout {
         this.mValue = value;
         this.mInvAdd = invAdd;
         this.mInventory = inventory;
-        RefreshValueText(false);
-//        if(handler != null)
-            postDelayed(resetToNormalMode, 3000);
+//        RefreshValueText(false);
+//        postDelayed(resetToNormalMode, 3000);
         return this;
     }
 
